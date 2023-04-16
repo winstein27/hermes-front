@@ -1,13 +1,11 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
+import Header from '@/components/Header';
+
 export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>Hermes</title>
-
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -18,6 +16,7 @@ export default function Document() {
         />
       </Head>
       <body>
+        <Header />
         <Main />
         <NextScript />
       </body>
