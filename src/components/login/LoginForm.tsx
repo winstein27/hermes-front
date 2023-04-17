@@ -1,12 +1,26 @@
 import React from 'react';
+import { object, string, TypeOf } from 'zod';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import FormInput from '../UI/FormInput';
+
+const loginSchema = object({
+  email: string().min(1, 'Email is required').email('Email is invalid'),
+  password: string()
+    .min(1, 'Password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .max(32, 'Password must be less than 32 characters'),
+});
+
+type ILogin = TypeOf<typeof loginSchema>;
+
 interface Props {
-  submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmitHandler: (loginInfo: { email: string; password: string }) => void;
 }
 
 const LoginForm = (props: Props) => {
@@ -20,54 +34,71 @@ const LoginForm = (props: Props) => {
     ? { marginRight: 3, paddingLeft: 4, paddingRight: 4 }
     : { display: 'block', marginTop: 2, marginBottom: 2 };
 
-  return (
-    <Box
-      sx={{
-        padding: 2,
-      }}
-    >
-      <form action="POST" onSubmit={props.submitHandler}>
-        <TextField
-          required
-          id="email"
-          name="email"
-          label="Email"
-          placeholder="example@email.com"
-          variant="standard"
-          margin="normal"
-          fullWidth
-        />
-        <TextField
-          required
-          id="password"
-          type="password"
-          name="email"
-          label="Password"
-          variant="standard"
-          margin="normal"
-          fullWidth
-        />
+  const defaultValues: ILogin = {
+    email: '',
+    password: '',
+  };
 
-        <Box sx={{ ...boxStyles, marginTop: 2 }}>
-          <Button
-            variant="contained"
-            type="submit"
-            sx={buttonStyles}
-            fullWidth={!matches}
-          >
-            Send
-          </Button>
-          <Button
-            variant="outlined"
-            type="button"
-            sx={buttonStyles}
-            fullWidth={!matches}
-          >
-            Clear
-          </Button>
-        </Box>
-      </form>
-    </Box>
+  // ? The object returned from useForm Hook
+  const methods = useForm<ILogin>({
+    resolver: zodResolver(loginSchema),
+    defaultValues,
+  });
+
+  const onSubmitHandler: SubmitHandler<ILogin> = (values: ILogin) => {
+    props.onSubmitHandler(values);
+  };
+
+  return (
+    <FormProvider {...methods}>
+      <Box
+        sx={{
+          padding: 2,
+        }}
+      >
+        <form action="POST" onSubmit={methods.handleSubmit(onSubmitHandler)}>
+          <FormInput
+            required
+            id="email"
+            name="email"
+            label="Email"
+            placeholder="example@email.com"
+            variant="standard"
+            margin="normal"
+            fullWidth
+          />
+          <FormInput
+            required
+            id="password"
+            type="password"
+            name="password"
+            label="Password"
+            variant="standard"
+            margin="normal"
+            fullWidth
+          />
+
+          <Box sx={{ ...boxStyles, marginTop: 2 }}>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={buttonStyles}
+              fullWidth={!matches}
+            >
+              Send
+            </Button>
+            <Button
+              variant="outlined"
+              type="button"
+              sx={buttonStyles}
+              fullWidth={!matches}
+            >
+              Clear
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </FormProvider>
   );
 };
 

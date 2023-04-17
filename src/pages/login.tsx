@@ -6,8 +6,11 @@ import Paper from '@mui/material/Paper';
 import LoginForm from '@/components/login/LoginForm';
 
 const Login = () => {
-  const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const formSubmitHandler = (loginInfo: {
+    email: string;
+    password: string;
+  }) => {
+    console.log(loginInfo);
   };
 
   return (
@@ -19,12 +22,11 @@ const Login = () => {
         '& > :not(style)': {
           m: 1,
           width: 600,
-          height: 300,
         },
       }}
     >
       <Paper elevation={3}>
-        <LoginForm submitHandler={formSubmitHandler} />
+        <LoginForm onSubmitHandler={formSubmitHandler} />
       </Paper>
     </Box>
   );
