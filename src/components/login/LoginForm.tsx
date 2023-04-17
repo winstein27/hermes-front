@@ -92,6 +92,7 @@ const LoginForm = (props: Props) => {
               type="button"
               sx={buttonStyles}
               fullWidth={!matches}
+              onClick={() => methods.reset()}
             >
               Clear
             </Button>
