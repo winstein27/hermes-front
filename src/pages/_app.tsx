@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from '@mui/material/styles';
 
+import '@/styles/globals.css';
 import theme from '@/styles/theme';
 
 import Header from '@/components/Header';
