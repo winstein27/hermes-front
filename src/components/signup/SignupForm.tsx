@@ -79,6 +79,11 @@ const SignupForm = (props: Props) => {
     }
   };
 
+  const clearFormHandler = () => {
+    methods.reset();
+    setPasswordsMatch(true);
+  };
+
   return (
     <FormProvider {...methods}>
       <Box
@@ -165,7 +170,7 @@ const SignupForm = (props: Props) => {
               type="button"
               sx={buttonStyles}
               fullWidth={!matches}
-              onClick={() => methods.reset()}
+              onClick={clearFormHandler}
             >
               Clear
             </Button>
