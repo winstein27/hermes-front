@@ -34,6 +34,13 @@ const Header = () => {
           >
             Login
           </Button>
+          <Button
+            color="inherit"
+            type="button"
+            onClick={() => router.push('/signup')}
+          >
+            Signup
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
