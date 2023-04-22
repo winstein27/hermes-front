@@ -92,7 +92,7 @@ const SignupForm = (props: Props) => {
         }}
       >
         {!passwordsMatch && (
-          <Alert severity="error">Passwords don't match!</Alert>
+          <Alert severity="error">Passwords don&apos;t match!</Alert>
         )}
         <form action="POST" onSubmit={methods.handleSubmit(onSubmitHandler)}>
           <FormInput
